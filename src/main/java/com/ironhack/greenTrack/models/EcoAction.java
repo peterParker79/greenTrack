@@ -22,7 +22,7 @@ public abstract class EcoAction {
     private int id;
 
     @NotNull
-    private Date date;
+    private String date;
 
     private String description;
 

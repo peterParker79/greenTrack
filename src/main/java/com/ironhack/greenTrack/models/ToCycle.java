@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class ToCycle extends EcoAction{
-    private int km;
+    private int kilometers;
     private String origin;
     private String destination;
 
