@@ -1,5 +1,6 @@
 package com.ironhack.greenTrack.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public abstract class EcoAction {
     //cada acción ecológica un único usuario asociado
     @ManyToOne(fetch = FetchType.EAGER) //carga su user asociado
     @JoinColumn(name="user_id", nullable=false)
+    @JsonBackReference //parte de atras de la referencia para no volver a serializar
     private User user;
 
 }
