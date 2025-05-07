@@ -27,11 +27,13 @@ public class User {
 
         @NotBlank (message="Password can not be avoid.")
         private String password;
-
-        @NotNull (message="Role can not be avoid.")
         @Enumerated(EnumType.STRING)
         private ERole role;
-
+/*
+        @NotNull (message="Role can not be avoid.")
+        @ManyToMany(fetch = FetchType.EAGER)
+        private Role rol;
+*/
         @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
         private Collection<EcoAction> ecoActions;
 }
