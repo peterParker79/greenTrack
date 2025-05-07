@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +21,9 @@ public class UserService {
     private UserRepository userRepository;
 
 
+    public  List<User>  getUsers(){
+        return userRepository.findAll();
+    }
     public User saveUser(User user){
         return userRepository.save(user);
     }
@@ -43,8 +47,13 @@ public class UserService {
         return user;
     }
 
+    public User save (User user){
+        return userRepository.save(user);
+    }
     public void deleteUser(int id){
         userRepository.deleteById(id);
     }
+
+    public long count(){return userRepository.count();}
 
 }
