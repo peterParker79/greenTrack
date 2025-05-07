@@ -39,11 +39,15 @@ public class UserService {
         return existingUserId;
     }
 
-    public User getUserbyName(String name){
-      //  User existingUserName = userRepository.findByName(name).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND))
+    public User getUserName(String name){
         User existingUserName = userRepository.findByName(name).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         return existingUserName;
     }
+
+
+
+
+
     public User createUser(String name, String password, ERole role){
         User user = new User();
         user.setName(name);
