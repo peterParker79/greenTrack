@@ -17,9 +17,12 @@ public class PublicController {
     @Autowired
     UserService userService;
     @GetMapping
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.OK)
     // de manera pública se puede consultar el número de usuarios registrados en la app
 
-    public long usersRegistered() {return userService.count();}
+    public long usersRegistered() {
+        return userService.count();
+
+    }
 
 }

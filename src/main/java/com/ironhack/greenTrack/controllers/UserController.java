@@ -19,6 +19,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
+//    @GetMapping("{id}")
+//    public User getUser(@PathVariable int id) {
+//        return userService.getUserbyId(id);
+//    }
+
     @GetMapping("{id}")
     public User getUser(@PathVariable int id) {
         return userService.getUserbyId(id);
@@ -31,7 +36,6 @@ public class UserController {
 
     public List<User> getUsers() {
         return userService.getUsers();
-
     }
 
     @PostMapping("/create-user")
