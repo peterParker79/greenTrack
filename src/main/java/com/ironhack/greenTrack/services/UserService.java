@@ -56,9 +56,18 @@ public class UserService {
     public User save (User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+        }
+
+        public void encryptPassword(User user){
+             user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+     public boolean verifyPassword (String pass, User user){// sin cifrar y cifrado
+         return passwordEncoder.matches(pass, user.getPassword());
+        }
 
 
-    }
+
     public void deleteUser(int id){
         userRepository.deleteById(id);
     }
