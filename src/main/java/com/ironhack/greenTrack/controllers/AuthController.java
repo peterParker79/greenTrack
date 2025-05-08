@@ -17,7 +17,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/auth")
 public class AuthController {
 
     @Autowired

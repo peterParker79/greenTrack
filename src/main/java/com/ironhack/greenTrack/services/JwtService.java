@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ironhack.greenTrack.models.AuthResponseDTO;
 import com.ironhack.greenTrack.models.ERole;
 import com.ironhack.greenTrack.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.Date;
 
@@ -51,12 +53,12 @@ public class JwtService {
     }
 
 
-    public String extractRoles(String token) {
+    public String extractRole(String token) {
         DecodedJWT jwt = JWT.require(Algorithm.HMAC256(SECRET))
                 .build()
                 .verify(token);
 
-        return jwt.getClaim("roles").asString();
+        return jwt.getClaim("role").asString();
     }
 
     public ResponseEntity<String> login( User user) {
@@ -74,7 +76,14 @@ public class JwtService {
 
             if (validRole){
                 String token = generateToken(userLogin.getName(), roleUser );
-                return ResponseEntity.ok(token);}
+
+                //return ResponseEntity.ok(token);
+                AuthResponseDTO response = new AuthResponseDTO();
+                response.setToken(token);
+                response.setUsername(userLogin.getName());
+                response.setRole(roleUser);
+                return ResponseEntity.ok(response.toString());
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
     }
