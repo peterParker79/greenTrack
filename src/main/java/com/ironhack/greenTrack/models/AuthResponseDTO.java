@@ -16,4 +16,13 @@ import java.util.List;
         private String token;
         private String username;
         private String role;
+
+
+       public String toString(){
+            return
+                    " {\ntoken: " + token +
+                            ",\nusername: " + username +
+                            ",\nrole: " + role + "\n}";
+
+        }
     }
