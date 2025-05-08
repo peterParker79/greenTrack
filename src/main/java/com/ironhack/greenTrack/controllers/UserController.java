@@ -7,6 +7,7 @@ import com.ironhack.greenTrack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,21 +25,24 @@ public class UserController {
 //        return userService.getUserbyId(id);
 //    }
 
-    @GetMapping("{id}")
+    //sólo pueden ver los perfiles los administradores
+    @GetMapping("/profiles/{id}")
     public User getUser(@PathVariable int id) {
         return userService.getUserbyId(id);
     }
 
 
 
-    @GetMapping("/users")
+    @GetMapping("/profiles")
     @ResponseStatus(HttpStatus.OK)
 
     public List<User> getUsers() {
         return userService.getUsers();
     }
 
-    @PostMapping("/create-user")
+    //Un administrador puede crear usuarios con
+    //perfil de administrador
+    @PostMapping("/profiles/create-user")
     @ResponseStatus (HttpStatus.CREATED)
     public User createUser(@RequestBody User user) {
         return userService.save(user);

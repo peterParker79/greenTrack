@@ -28,6 +28,7 @@ public class User {
 
         @NotBlank (message="Password can not be avoid.")
         private String password;
+
         @Enumerated(EnumType.STRING)
         private ERole role;
 /*

@@ -29,10 +29,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Server doesn't store session state, because it's a REST API
                 .authorizeHttpRequests(auth -> auth
                         // Public routes
+                        //.anyRequest().permitAll()
+                        .requestMatchers("/api/public/register").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
+
                         // Routes protected by role
-                        .requestMatchers("/api/admin").hasRole("ADMIN")
+                        .requestMatchers("/api/profiles/").hasRole("ADMIN")
                         // All other routes require authentication
                         .anyRequest().authenticated()
                 )

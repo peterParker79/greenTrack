@@ -1,12 +1,11 @@
 package com.ironhack.greenTrack.controllers;
 
+import com.ironhack.greenTrack.models.ERole;
+import com.ironhack.greenTrack.models.User;
 import com.ironhack.greenTrack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/public")
@@ -26,4 +25,14 @@ public class PublicController {
 
     }
 
+    @PostMapping("/register")
+    @ResponseStatus (HttpStatus.CREATED)
+    public String createUser(@RequestBody User user) {
+        // en el registro el usuario tiempre tendrá rol de user
+        //sólo proporciona nombre y password
+        user.setRole(ERole.ROLE_USER);
+        return
+                "Welcome " + user.getName() +"!!"+
+                        "\n Has been registered " + userService.save(user);
+    }
 }
