@@ -42,7 +42,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/public/**").permitAll()
 
                         // Routes protected by role
-                        .requestMatchers("/api/profiles/").hasRole("ADMIN")
+                        //.requestMatchers("/api/profiles/**").hasRole("ADMIN")
+                        .requestMatchers("/api/eco-action/create/**").hasRole("ADMIN")
                         // All other routes require authentication
                         .anyRequest().authenticated()
                 )

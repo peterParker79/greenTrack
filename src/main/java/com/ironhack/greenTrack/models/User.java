@@ -39,4 +39,5 @@ public class User {
         @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
         @JsonManagedReference
         private Collection<EcoAction> ecoActions;
+
 }
