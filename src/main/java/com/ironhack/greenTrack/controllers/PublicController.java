@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/public")
-
+@RequestMapping("/api/public")
 
 public class PublicController {
 
@@ -20,8 +19,10 @@ public class PublicController {
     @ResponseStatus(HttpStatus.OK)
     // de manera pública se puede consultar el número de usuarios registrados en la app
 
-    public long usersRegistered() {
-        return userService.count();
+    public String  usersRegistered() {
+        return "WellCome GREEN TRACK!!!\nCurrently there are "+
+                userService.count() +" users improving their green impact!" +
+                "Please register now through /api/public/register\n\n\tGreen Growing!\n";
 
     }
 

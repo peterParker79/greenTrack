@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String role = jwtService.extractRole(token);
         //List<String> roles = ERole.toList();
 
-        //------------------Trying understand.....---------------------------------------------------
+        //------------------Trying understand.....--------------------------
         // Convierto el rol encontrado en el token al tipo GrantedAuthority
         Collection<GrantedAuthority> authorities = extractAuthorities(role);
 
