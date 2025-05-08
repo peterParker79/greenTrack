@@ -26,10 +26,13 @@ Registro de usuario: Es de acceso libre realizar el registro de un usuario.<br>
 
 http://localhost:8080/api/public/register<br>
 En el body de la petición se requiere nombre de *usuario* y *password*:<br>
-{<br>
-        "name": "El nuevo",<br>
-        "password": "1234"   
-    }<br>
+{
+
+        "name": "El nuevo",
+        "password": "1234",
+        "role": "ROLE_USER"
+        
+    }
 Se obtiene un mensaje con los detalles del usuario registrado donde aparecen:<br>
 -   id,
 - nombre, 
@@ -40,6 +43,26 @@ Se obtiene un mensaje con los detalles del usuario registrado donde aparecen:<br
 Ejemplo:<br>
 Welcome El nuevo!!<br>
 Has been registered User(id=19, name=El nuevo, password=$2a$10$066bz25qCAgSvYc9fxyeiOosz8bS5lf1YodaKIM4Md5lYPoNHieEm, <br>role=ROLE_USER, ecoActions=null)
+
+### Para registrar un usuario con privilegios Administrador:<br>
+Sólo un usuario Administrador puede crear usuarios con privilegios Administrador.<br>
+El registro se ha de realizar a través de:<br>
+http://localhost:8080/api/profiles/create-user<br>
+(Ruta accesible sólo con  bearer token  Admin.)<br>
+
+En el body de esta petición POST introducimos los datos del usuario Administrador a crear.<br>
+{
+
+        "name": "Nuevo administrador",
+        "password": "1234",
+        "role": "ROLE_ADMIN"
+        
+    }
+
+Debemos tener la Authorización en Bearer Token y haber proporcionado un token válido
+
+
+
 
 ### Inicio de sesión y obtención de token:<br>
 Una vez un usuario se ha registrado  puede ingresar en el sistema proporcionando <br>
