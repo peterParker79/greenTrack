@@ -40,4 +40,8 @@ public class User {
         @JsonManagedReference
         private Collection<EcoAction> ecoActions;
 
+        public String toString(){
+                return name + " " + password + " " + role + " " ;
+        }
+
 }

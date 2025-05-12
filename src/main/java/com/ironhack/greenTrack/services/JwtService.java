@@ -27,9 +27,10 @@ public class JwtService {
     private static final String SECRET = "secret";
 
 
-    public String generateToken(String userName, String role) {
+    public String generateToken(Integer id, String userName, String role) {
         return JWT.create()
                 .withSubject (userName)
+                .withClaim("id", id) //added
                 .withClaim("role", role)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis()+60*60*1000))
@@ -43,6 +44,13 @@ public class JwtService {
         } catch (JWTVerificationException e) {
             return false;
         }
+    }
+
+    public Integer extractId(String token) {
+        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(SECRET))
+                .build()
+                .verify(token);
+        return decodedJWT.getClaim("id").asInt();
     }
 
 
@@ -77,11 +85,12 @@ public class JwtService {
             }
 
             if (validRole){
-                String token = generateToken(userLogin.getName(), roleUser );
+                String token = generateToken(userLogin.getId(), userLogin.getName(), roleUser );
 
                 //return ResponseEntity.ok(token);
                 //AuthResponseDTO response = new AuthResponseDTO();
                 response.setToken(token);
+                response.setId(extractId(token));
                 response.setUsername(userLogin.getName());
                 response.setRole(roleUser);
                 return ResponseEntity.ok(response);

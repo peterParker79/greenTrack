@@ -1,7 +1,10 @@
 package com.ironhack.greenTrack.filters;
 
+import com.ironhack.greenTrack.models.CustomUserDetails;
 import com.ironhack.greenTrack.models.ERole;
+import com.ironhack.greenTrack.models.User;
 import com.ironhack.greenTrack.services.JwtService;
+import com.ironhack.greenTrack.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +29,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     JwtService jwtService;
-// Filtrado para la autorización con JWT
+    @Autowired
+    private UserService userService;
+
+    // Filtrado para la autorización con JWT
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain)
@@ -61,9 +67,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Collection<GrantedAuthority> authorities = extractAuthorities(role);
 
         // Se crea el objeto de tipo Authentication La password ya fue validada antes, aqui se pasa null
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userName, null, authorities);
+        // Aquí la principal es username, un string
+        User user=userService.getUserName(userName);
+        CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(user, null, authorities);
+            //new UsernamePasswordAuthenticationToken(userName, null, authorities);
 
         // Se registra al usuario como autenticado para esa petición
         SecurityContextHolder.getContext().setAuthentication(authentication);

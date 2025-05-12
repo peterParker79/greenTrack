@@ -110,7 +110,7 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #id == authentication.principal.id")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/api/profiles/{id}/update-name")
     public ResponseEntity<UpdateNameDTO> updateUserName(@PathVariable int id, @RequestBody UpdateNameDTO userRenamed) {
         User user = userRepository.findById(id)

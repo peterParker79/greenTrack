@@ -13,6 +13,7 @@ import java.util.List;
     @AllArgsConstructor
     @Builder
     public class AuthResponseDTO {
+        private int id;
         private String token;
         private String username;
         private String role;
@@ -21,6 +22,7 @@ import java.util.List;
        public String toString(){
             return
                     " {\ntoken: " + token +
+                            "\nid: " + id +
                             "\nusername: " + username +
                             "\nrole: " + role + "\n}";
 
