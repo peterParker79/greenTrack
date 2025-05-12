@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public User getUserbyId(int id){
-        User existingUserId = userRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User existingUserId = userRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND," Do no exit id " + id + " user"));
         return existingUserId;
     }
 

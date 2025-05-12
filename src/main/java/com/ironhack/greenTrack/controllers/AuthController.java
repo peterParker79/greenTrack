@@ -1,7 +1,9 @@
 package com.ironhack.greenTrack.controllers;
 
+import com.ironhack.greenTrack.models.AuthResponseDTO;
 import com.ironhack.greenTrack.models.ERole;
 import com.ironhack.greenTrack.models.User;
+import com.ironhack.greenTrack.models.UserLoginDTO;
 import com.ironhack.greenTrack.services.JwtService;
 import com.ironhack.greenTrack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,9 @@ public class AuthController {
     private JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-       return jwtService.login(user);
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody UserLoginDTO userDTO) {
+        //public ResponseEntity<String> login(@RequestBody User user) {
+       return jwtService.login(userDTO);
     }
 
     // ME HE LLEVADO ESTO A JWTSERVICE

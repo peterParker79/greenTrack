@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ironhack.greenTrack.models.AuthResponseDTO;
 import com.ironhack.greenTrack.models.ERole;
 import com.ironhack.greenTrack.models.User;
+import com.ironhack.greenTrack.models.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,8 +62,9 @@ public class JwtService {
         return jwt.getClaim("role").asString();
     }
 
-    public ResponseEntity<String> login( User user) {
+    public ResponseEntity<AuthResponseDTO> login( UserLoginDTO user) {
         // si el usuario existe lo guarda, si no se lanza una excepción
+        AuthResponseDTO response = new AuthResponseDTO();
         User userLogin = userService.getUserName(user.getName()); //recuperado de la BBDD
 
         boolean validPassword = userService.verifyPassword(user.getPassword(), userLogin); //en body viene en texto plano
@@ -78,14 +80,15 @@ public class JwtService {
                 String token = generateToken(userLogin.getName(), roleUser );
 
                 //return ResponseEntity.ok(token);
-                AuthResponseDTO response = new AuthResponseDTO();
+                //AuthResponseDTO response = new AuthResponseDTO();
                 response.setToken(token);
                 response.setUsername(userLogin.getName());
                 response.setRole(roleUser);
-                return ResponseEntity.ok(response.toString());
+                return ResponseEntity.ok(response);
+                //return ResponseEntity.ok(response.toString());
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
 }
