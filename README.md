@@ -122,4 +122,9 @@ Para registrar una nueva eco acción de montar en bicicleta:<br>
 http://localhost:8080/api/profiles/id_perfil/new-ecoaction/to-cycle
 
 Ejemplo:
-![img.png](src/main/resources/img/NewEcoActionJohnDoeToCycle.png)q
+![img.png](src/main/resources/img/NewEcoActionJohnDoeToCycle.png)
+
+
+### Ver el perfil de usuario
+
+Un usuario una vez logeado puede consultar su perfil
