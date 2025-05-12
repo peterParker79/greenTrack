@@ -72,8 +72,9 @@ public class UserService {
 
 
 
-    public void deleteUser(int id){
+    public String deleteUser(int id){
         userRepository.deleteById(id);
+        return "User id: " + id + " deleted";
     }
 
     public long count(){return userRepository.count();}

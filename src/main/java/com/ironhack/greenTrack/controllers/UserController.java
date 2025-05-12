@@ -74,4 +74,10 @@ public class UserController {
         return userService.save(user);
     }
 
+    @DeleteMapping("/profiles/delete-user/{id}")
+    @ResponseStatus (HttpStatus.CREATED)
+    public void deleteUser(@PathVariable int id) {
+         userService.deleteUser(id);
+    }
+
 }

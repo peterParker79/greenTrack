@@ -27,6 +27,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // For development. In production, configure appropriately
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Server doesn't store session state, because it's a REST API
+
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) //added
+
                 .authorizeHttpRequests(auth -> auth
                         // Public routes
                         //.anyRequest().permitAll()
@@ -36,14 +39,14 @@ public class SecurityConfig {
                                 "/swagger-ui.html"
                         ).permitAll()
 
-
                         .requestMatchers("/api/public/register").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
 
                         // Routes protected by role
-                        //.requestMatchers("/api/profiles/**").hasRole("ADMIN")
+                        .requestMatchers("/api/profiles").hasRole("ADMIN")
                         .requestMatchers("/api/eco-action/create/**").hasRole("ADMIN")
+
                         // All other routes require authentication
                         .anyRequest().authenticated()
                 )

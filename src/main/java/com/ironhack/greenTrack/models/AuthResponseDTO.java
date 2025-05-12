@@ -21,8 +21,8 @@ import java.util.List;
        public String toString(){
             return
                     " {\ntoken: " + token +
-                            ",\nusername: " + username +
-                            ",\nrole: " + role + "\n}";
+                            "\nusername: " + username +
+                            "\nrole: " + role + "\n}";
 
         }
     }

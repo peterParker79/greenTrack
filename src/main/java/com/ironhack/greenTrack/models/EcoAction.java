@@ -22,7 +22,7 @@ public abstract class EcoAction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    //@NotNull
     private String date;
 
     private String description;
@@ -34,7 +34,7 @@ public abstract class EcoAction {
 
     //cada acción ecológica un único usuario asociado
     @ManyToOne(fetch = FetchType.EAGER) //carga su user asociado
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="user_id", nullable=true)
     @JsonBackReference //parte de atras de la referencia para no volver a serializar
     private User user;
 

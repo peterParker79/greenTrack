@@ -46,7 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // si el token no es válido pasa a la siguiente cadena de filtrado.....
         if (!tokenValid) {
-            filterChain.doFilter(request, response);// pasa al siguiente filtro
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //added
+            response.getWriter().write("Invalid token"); //added
+            //filterChain.doFilter(request, response);// pasa al siguiente filtro
             return;
         }
 

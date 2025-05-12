@@ -27,10 +27,10 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setName("anonymous14");
-        user.setPassword("void");
-        userService.encryptPassword(user);
-        user.setRole(ERole.ROLE_ADMIN);
+        user.setName("usuario");
+        user.setPassword("1234");
+       // userService.encryptPassword(user);
+        user.setRole(ERole.ROLE_USER);
        // userRepository.save(user);
 
     }
@@ -40,6 +40,7 @@ class UserServiceTest {
         userRepository.delete(user);
     }
 */
+
     @Test
     @DisplayName("Test save user")
     public void saveUser() {

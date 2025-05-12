@@ -92,8 +92,19 @@ Cada usuario con privilegios de usuario, sólo puede acceder a su perfil<br>
 Acceso a perfil de usuario:<br>
 http://localhost:8080/api/profiles/id_usuario
 
-### Acceso a todos los usuarios registrados
+### Mostrar todos los usuarios registrados
 Sólo usuarios Administradores.<br>
 Es necesario aportar un bearer token válido de usuario administrador.
 http://localhost:8080/api/profiles
 
+### Dar de alta una nueva Eco Acción
+Sólo usuarios Administradores.<br>
+Los administradores crearán las Acciones Ecológicas disponibles.<br>
+Los usuarios registrados en la APP podrán indicar que han realizado alguna de las eco acciones.<br>
+
+http://localhost:8080/api/eco-action/create/to-cycle
+<br>Body de esta petición POST que contiene la descripción de la eco acción montar en bicicleta<br>
+
+![img.png](src/main/resources/img/img.png)
+        
+    
