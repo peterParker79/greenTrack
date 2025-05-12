@@ -98,13 +98,28 @@ Es necesario aportar un bearer token válido de usuario administrador.
 http://localhost:8080/api/profiles
 
 ### Dar de alta una nueva Eco Acción
-Sólo usuarios Administradores.<br>
-Los administradores crearán las Acciones Ecológicas disponibles.<br>
-Los usuarios registrados en la APP podrán indicar que han realizado alguna de las eco acciones.<br>
+Sólo los usuarios Administradores pueden crear eco acciones nuevas.<br>
+Los usuarios registrados podrán indicar que han realizado alguna de las eco acciones.<br>
 
+Ejemplo de nueva eco acción 'to-cycle'<br>
 http://localhost:8080/api/eco-action/create/to-cycle
 <br>Body de esta petición POST que contiene la descripción de la eco acción montar en bicicleta<br>
 
-![img.png](src/main/resources/img/img.png)
+![img.png](src/main/resources/img/ecoAccionToCycle.png)
         
-    
+### Registro de eco accion de usuario
+Los usuarios del sistema pueden ir registrando sus eco acciones.<br>
+Ejemplo:Registrar una nueva  acción de montar en bicicleta:
+El usuario debe introducir:
+* descripción 
+* kilómetros recorridos
+* Punto de origen
+* Punto de llegada
+
+El sistema asigna un valor de greenImpact.
+En este caso el usuario consigue 1 punto cada 3km.
+Para registrar una nueva eco acción de montar en bicicleta:<br>
+http://localhost:8080/api/profiles/id_perfil/new-ecoaction/to-cycle
+
+Ejemplo:
+![img.png](src/main/resources/img/NewEcoActionJohnDoeToCycle.png)

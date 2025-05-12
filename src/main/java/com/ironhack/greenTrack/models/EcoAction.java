@@ -30,7 +30,7 @@ public abstract class EcoAction {
     @Max(value=9)
     @Min(value=1)
     @Digits(integer=1, fraction=0)
-    private int greenImpact;
+    private Integer greenImpact;
 
     //cada acción ecológica un único usuario asociado
     @ManyToOne(fetch = FetchType.EAGER) //carga su user asociado

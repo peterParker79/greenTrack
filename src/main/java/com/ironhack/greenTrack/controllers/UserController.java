@@ -1,8 +1,8 @@
 package com.ironhack.greenTrack.controllers;
 
 
-import com.ironhack.greenTrack.models.ERole;
-import com.ironhack.greenTrack.models.User;
+import com.ironhack.greenTrack.models.*;
+import com.ironhack.greenTrack.repositories.EcoActionRepository;
 import com.ironhack.greenTrack.repositories.UserRepository;
 import com.ironhack.greenTrack.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,11 @@ import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    EcoActionRepository ecoActionRepository;
 
 //    @GetMapping("{id}")
 //    public User getUser(@PathVariable int id) {
@@ -80,4 +85,32 @@ public class UserController {
          userService.deleteUser(id);
     }
 
+
+    @PostMapping ("/profiles/{id}/new-ecoaction/to-cycle")
+    @ResponseStatus (HttpStatus.CREATED)
+    public ToCycle addEcoActionToUser(@PathVariable int id, @RequestBody ToCycleDTO dto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        ToCycle ecoAction = new ToCycle();
+        ecoAction.setDate(dto.getDate());
+        ecoAction.setDescription(dto.getDescription()); //personalizada del usuario
+        ecoAction.setKilometers(dto.getKilometers());
+        ecoAction.setOrigin(dto.getOrigin());
+        ecoAction.setDestination(dto.getDestination());
+
+        int greenImpact = Math.min(9, Math.max(1, dto.getKilometers() / 3)); //1 punto cada 3 km
+        ecoAction.setGreenImpact(greenImpact);
+
+
+        ecoAction.setUser(user);
+
+        return ecoActionRepository.save(ecoAction);
+
+    }
+
+
+
+
 }
+
