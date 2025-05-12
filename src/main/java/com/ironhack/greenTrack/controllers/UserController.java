@@ -110,14 +110,15 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PatchMapping("/api/profiles/{id}/update-name")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
+   @PreAuthorize("hasRole('ROLE_ADMIN') or #id == authentication.principal.id")
+    @PatchMapping("/profiles/{id}/update-name")
     public ResponseEntity<UpdateNameDTO> updateUserName(@PathVariable int id, @RequestBody UpdateNameDTO userRenamed) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User profile not found"));
 
-        user.setName(userRenamed.getNewName());
-        userService.save(user);
+        user.setName(userRenamed.getName() );
+        userRepository.save(user); // aquí está el problema****
         ResponseEntity <UpdateNameDTO> responseEntity = new ResponseEntity<>(HttpStatus.OK);
         return responseEntity;
 

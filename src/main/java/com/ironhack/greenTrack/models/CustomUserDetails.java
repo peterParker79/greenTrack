@@ -2,6 +2,7 @@ package com.ironhack.greenTrack.models;
 
 import com.ironhack.greenTrack.models.User;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
 
+    @Getter
     private final int id;
     private final String name;
     private final String password;
@@ -23,10 +25,6 @@ public class CustomUserDetails implements UserDetails {
         this.name = user.getName();
         this.password = user.getPassword();
         this.authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override

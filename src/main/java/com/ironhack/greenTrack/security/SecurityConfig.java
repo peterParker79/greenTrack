@@ -38,13 +38,15 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-
+                        //.requestMatchers("/api/profiles/**").permitAll()
                         .requestMatchers("/api/public/register").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
 
                         // Routes protected by role
                         .requestMatchers("/api/profiles").hasRole("ADMIN")
+                        .requestMatchers("/api/profiles/*/update-name}").authenticated()
+                        .requestMatchers("/api/profiles/**").hasRole("ADMIN")
                         .requestMatchers("/api/eco-action/create/**").hasRole("ADMIN")
 
                         // All other routes require authentication

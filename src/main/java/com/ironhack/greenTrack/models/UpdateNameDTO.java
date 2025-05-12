@@ -1,17 +1,15 @@
 package com.ironhack.greenTrack.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class UpdateNameDTO {
-    private String newName;
-
-    public String getNewName() {return newName;}
-
-    public void setNewName(String newName) {this.newName = newName;}
+    private String name;
 
 
-
-    public String toString(){
-
-        return "Renamed: " +newName;
-    }
 
 }
