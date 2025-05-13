@@ -19,7 +19,7 @@ public class PublicController {
     // de manera pública se puede consultar el número de usuarios registrados en la app
 
     public String  usersRegistered() {
-        return "WellCome GREEN TRACK!!!\nCurrently there are "+
+        return "Wellcome GREEN TRACK!!!\nCurrently there are "+
                 userService.count() +" users improving their green impact!" +
                 "Please register now through /api/public/register\n\n\tGreen Growing!\n";
 

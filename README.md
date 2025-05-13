@@ -20,6 +20,13 @@ Concepto
 Los usuarios pueden registrar acciones ecológicas y ver su impacto verde estimado<br> basándonos en una puntuación numérica básica.
 Los administradores podrán dar de alta o eliminar nuevas acciones.
 
+### Bienvenida a GreenTrack
+El inicio de la app lo obtenemos en el siguiente endpoint.
+http://localhost:8080/api/public
+
+Nos muestra un mensaje de bienvenida y cómo podemos registrarnos.
+![img.png](src/main/resources/img/Public_bienvenida.png)
+
 ### Para registrar un usuario:<br>
 
 Registro de usuario: Es de acceso libre realizar el registro de un usuario.<br>
