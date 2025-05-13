@@ -18,6 +18,8 @@ public class PublicController {
     @ResponseStatus(HttpStatus.OK)
     // de manera pública se puede consultar el número de usuarios registrados en la app
 
+
+
     public String  usersRegistered() {
         return "Wellcome GREEN TRACK!!!\nCurrently there are "+
                 userService.count() +" users improving their green impact!" +

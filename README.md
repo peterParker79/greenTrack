@@ -29,27 +29,26 @@ Nos muestra un mensaje de bienvenida y cómo podemos registrarnos.
 
 ### Para registrar un usuario:<br>
 
-Registro de usuario: Es de acceso libre realizar el registro de un usuario.<br>
-
+Registro de usuario: Es de acceso libre realizar un registro de usuario.<br>
 http://localhost:8080/api/public/register<br>
+
 En el body de la petición se requiere nombre de *usuario* y *password*:<br>
 {
 
-        "name": "El nuevo",
-        "password": "1234",
-        "role": "ROLE_USER"
-        
+        "name": "Alicia Gonzalez",
+        "password": "1234"                
     }
 Se obtiene un mensaje con los detalles del usuario registrado donde aparecen:<br>
--   id,
+
 - nombre, 
 - contraseña cifrada, 
 - rol obtenido,
-- las eco-acciones inicialmente vacías.
 
 Ejemplo:<br>
-Welcome El nuevo!!<br>
-Has been registered User(id=19, name=El nuevo, password=$2a$10$066bz25qCAgSvYc9fxyeiOosz8bS5lf1YodaKIM4Md5lYPoNHieEm, <br>role=ROLE_USER, ecoActions=null)
+![img.png](src/main/resources/img/RegisterUserRoleUser.png)
+
+Los usuarios registrados obtienen un rol de usuario con acciones limitadas.
+
 
 ### Para registrar un usuario con privilegios Administrador:<br>
 Sólo un usuario Administrador puede crear usuarios con privilegios Administrador.<br>
