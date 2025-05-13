@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Profile("!test")
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -72,7 +74,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(user, null, authorities);
+                new UsernamePasswordAuthenticationToken(customUserDetails, null, authorities);
             //new UsernamePasswordAuthenticationToken(userName, null, authorities);
 
         // Se registra al usuario como autenticado para esa petición

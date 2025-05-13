@@ -1,3 +1,5 @@
+
+![GreenTrack.png](src/main/resources/img/GreenTrack.png)
 # greenTrack
 ### Green Track Project
 
@@ -13,19 +15,40 @@ http://localhost:8080/swagger-ui/index.html#
 
 
 # “GreenTrack” — Hábitos Ecológicos
-Una aplicación backend para registrar y seguir hábitos sostenibles de personas que desean reducir su huella ecológica.<br> 
-Usuarios que registran actividades como ir en bicicleta, reducir plásticos, plantar árboles, reciclar, etc.
+Aplicación backend  diseñada con Spring Boot, Spring Security y Java 21.
+Uso: Registro y seguimiento de hábitos sostenibles con el medio ambiente
+enfocado a  personas que desean contabilizar una  huella ecológica positiva
+denominada GreenImpact.<br> 
+Los Usuarios  registran actividades como ir en bicicleta, reciclar plásticos, 
+plantar árboles, limpieza de costa marítima etc.
 
-Concepto
-Los usuarios pueden registrar acciones ecológicas y ver su impacto verde estimado<br> basándonos en una puntuación numérica básica.
-Los administradores podrán dar de alta o eliminar nuevas acciones.
+* Los usuarios se  dan de alta en la aplicación con nombre y contraseña.
 
-### Bienvenida a GreenTrack
+* Los usuarios registran sus acciones ecológicas acumulan impacto verde<br> 
+basado en una puntuación numérica básica (GreenImpact).
+
+* Los administradores podrán dar de alta  nuevas acciones ecológicas llamadas ecoAcciones.
+- - -
+## Diseño
+Diseño enfocado a la sencillez, funcionabilidad y escalabilidad.
+
+### Diagrama de clases
+![diagramaClases.png](src/main/resources/img/diagramaClases.png)
+
+---
+
+### Schema BBDD
+![esquemaBBDD.png](src/main/resources/img/esquemaBBDD.png)
+
+- - -
+# Bienvenid@ a GreenTrack
 El inicio de la app lo obtenemos en el siguiente endpoint.
 http://localhost:8080/api/public
 
 Nos muestra un mensaje de bienvenida y cómo podemos registrarnos.
 ![img.png](src/main/resources/img/Public_bienvenida.png)
+
+
 
 ### Para registrar un usuario:<br>
 
@@ -49,9 +72,12 @@ Ejemplo:<br>
 
 Los usuarios registrados obtienen un rol de usuario con acciones limitadas.
 
+<br>
+
 
 ### Para registrar un usuario con privilegios Administrador:<br>
 Sólo un usuario Administrador puede crear usuarios con privilegios Administrador.<br>
+
 El registro se ha de realizar a través de:<br>
 http://localhost:8080/api/profiles/create-user<br>
 (Ruta accesible sólo con  bearer token  Admin.)<br>
@@ -59,7 +85,7 @@ http://localhost:8080/api/profiles/create-user<br>
 En el body de esta petición POST introducimos los datos del usuario Administrador a crear.<br>
 {
 
-        "name": "Nuevo administrador",
+        "name": "otro administrador",
         "password": "1234",
         "role": "ROLE_ADMIN"
         
@@ -67,6 +93,8 @@ En el body de esta petición POST introducimos los datos del usuario Administrad
 
 Debemos tener la Authorización en Bearer Token y haber proporcionado un token válido
 
+Resultado de crear un nuevo administrador:
+![img.png](src/main/resources/img/resultadoCrearNuevoAdminsitrador.png)
 
 
 
@@ -83,38 +111,44 @@ En el body debemos introducir el usario y contraseña empleados en el registro<b
 }<br>
 
 Aparece el resultado del proceso de acceso.<br>
-Se visualiza el token generado, el nombre de usuario y el rol obtenido.
+Se visualiza id, token para el usuario, el nombre y el rol.
+<br>
+![img.png](src/main/resources/img/LoginJohnDoe.png)
 
-{
-<p>token: aqui se muestra una cadena de texto que es el token, <br>
-username: John Doe,<br>
-role: ROLE_USER<p/>
-}<br>
- Este proceso de registro sólo permite registrar usuarios
-con privilegios de usuario y no de administrador.
+
+
+
+
+
 
 ### Acceso al perfil de usuario
-Cada usuario con privilegios de usuario, sólo puede acceder a su perfil<br>
+Cada usuario con rol de usuario sólo puede acceder a su perfil<br>
 Acceso a perfil de usuario:<br>
-http://localhost:8080/api/profiles/id_usuario
-
+http://localhost:8080/api/profiles/id_usuario <br><br>
+![img.png](src/main/resources/img/accesoAperfilUsuarioID.png)
+<br>
 ### Mostrar todos los usuarios registrados
 Sólo usuarios Administradores.<br>
-Es necesario aportar un bearer token válido de usuario administrador.
+Es necesario un bearer token de usuario administrador.<br>
 http://localhost:8080/api/profiles
 
-### Dar de alta una nueva Eco Acción
+![img.png](src/main/resources/img/MostrarTodosUsuario.png)
+
+### Dar de alta acciones eccológicas (nueva ecoAcción)
 Sólo los usuarios Administradores pueden crear eco acciones nuevas.<br>
-Los usuarios registrados podrán indicar que han realizado alguna de las eco acciones.<br>
+Los usuarios registrados podrán indicar que han realizado alguna de las eco acciones<br>
+disponibles.
 
-Ejemplo de nueva eco acción 'to-cycle'<br>
+
+A través del siguiente endPoint un administrador registra una nueva ecoAcción<br>
+Ejemplo: montar en bicicleta(to-cycle).<br>
+Una vez crearda, se muestran los detalles requeridos para que un usuario indique <br>
+que ha realizazo este tipo de ecoAcción.<br><br>
 http://localhost:8080/api/eco-action/create/to-cycle
-<br>Body de esta petición POST que contiene la descripción de la eco acción montar en bicicleta<br>
-
 ![img.png](src/main/resources/img/ecoAccionToCycle.png)
         
-### Registro de eco accion de usuario
-Los usuarios del sistema pueden ir registrando sus eco acciones.<br>
+### Usuario del sistema registrando acciones ecológicas
+Los usuarios del sistema pueden ir registrando sus eco acciones y acumulando puntos.<br>
 Ejemplo:Registrar una nueva  acción de montar en bicicleta:
 El usuario debe introducir:
 * descripción 
@@ -131,6 +165,14 @@ Ejemplo:
 ![img.png](src/main/resources/img/NewEcoActionJohnDoeToCycle.png)
 
 
-### Ver el perfil de usuario
+### Usuario accediento a su perfil
 
-Un usuario una vez logeado puede consultar su perfil
+Un usuario una vez logeado puede consultar su perfil<br>
+No podrá acceder a los perfiles de otros usuarios.
+http://localhost:8080/api/profiles/id_usuario
+
+![img.png](src/main/resources/img/accesoUsuarioPerfil.png)
+
+
+## Gracias por aumentar tu GreenImpact!!
+

@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,6 +49,7 @@ public class UserController {
     @GetMapping("/profiles/{id}")
     public ResponseEntity<User> accessById(@PathVariable int id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
         Collection<? extends GrantedAuthority> authorities =
                 SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
@@ -55,11 +57,14 @@ public class UserController {
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
 
         User user = userService.getUserbyId(id);
-        if (username.toLowerCase().equals(user.getName().toLowerCase())  ||
-            isAdmin)
-         {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }
+        if (user == null) return ResponseEntity.notFound().build();
+
+        // Si no es admin, debe coincidir el username
+        if (user.getName().equals(username)) {return ResponseEntity.ok(user);  }
+        if (isAdmin) {return new ResponseEntity<>(user, HttpStatus.OK);}
+
+
+
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
@@ -72,7 +77,8 @@ public class UserController {
 
     //Un administrador puede crear usuarios con
     //perfil de administrador
-    @Secured("ROLE_ADMIN")
+
+    //@Secured("ROLE_ADMIN")
 
     @PostMapping("/profiles/create-user")
     @ResponseStatus (HttpStatus.CREATED)
@@ -80,6 +86,13 @@ public class UserController {
         return userService.save(user);
     }
 
+
+//    @PostMapping("/profiles/create-user")
+//    @ResponseStatus (HttpStatus.CREATED)
+//    public User createUser(@RequestBody User user) {
+//        return userService.save(user);
+//    }
+    @Secured("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/profiles/delete-user/{id}")
     @ResponseStatus (HttpStatus.CREATED)
     public void deleteUser(@PathVariable int id) {
@@ -87,9 +100,22 @@ public class UserController {
     }
 
 
+    // solo para el usuario que esté en su perfil (id)
     @PostMapping ("/profiles/{id}/new-ecoaction/to-cycle")
     @ResponseStatus (HttpStatus.CREATED)
     public ToCycle addEcoActionToUser(@PathVariable int id, @RequestBody ToCycleDTO dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication.getPrincipal() instanceof CustomUserDetails customUserDetails)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized not instance of CustomUserDetails");
+        }
+        int authenticatedUserId = customUserDetails.getId();
+
+        if (authenticatedUserId != id) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this resource.");
+        }
+
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
