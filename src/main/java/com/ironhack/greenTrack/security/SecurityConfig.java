@@ -42,27 +42,19 @@ public class SecurityConfig {
                                 "/swagger-ui.html"
                         ).permitAll()
 
-
+                        .requestMatchers("/api/public/**").permitAll() //ok. Implica el registro
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
 
 
                         // Routes protected by role
-                        //.requestMatchers("/api/profiles/create-user").hasRole("ADMIN")
                         .requestMatchers("/api/profiles").hasRole("ADMIN") //muestra TODOS los perfiles
-
-                        //.requestMatchers("/api/profiles/*").hasRole("ADMIN") //muestra PERFIL POR ID
-                        .requestMatchers("/api/profiles/create-user/**").hasRole("ADMIN")
-
-                        .requestMatchers(HttpMethod.GET, "/api/profiles/*").authenticated()
                         .requestMatchers("/api/eco-action/create/**").hasRole("ADMIN")
-
+                        .requestMatchers("/api/profiles/create-user/**").hasRole("ADMIN") //crear cualquier tipo de ususario
 
                         // All other routes require authentication
                         .requestMatchers("/api/profiles/*/update-name").authenticated()
                         .requestMatchers("/api/profiles/*/new-ecoaction/to-cycle").authenticated()
-
-                        //.requestMatchers("/api/profiles/*").authenticated() //muestra PERFIL POR ID
+                        .requestMatchers(HttpMethod.GET, "/api/profiles/*").authenticated() //ok. aceso con ID cualquier usuario o admin
                         .anyRequest().authenticated()
                 )
 

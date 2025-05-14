@@ -12,7 +12,7 @@
 - 🔗 Repositorio: [GitHub - greenTrack](https://github.com/peterParker79/greenTrack)
 - 🎞️ Presentación: [Google Slides](https://docs.google.com/presentation/d/e/2PACX-1vTTOlc0ChFb37zMRA5d2IKInCyXMlOZHsgtCLUjMXOfiO0tNxKbsuPadvBgzkQ8TaCWzH41ctWOcFqE/pub?start=false&loop=false&delayms=3000)
 - ✅ Gestión de tareas: [Trello - GreenTrack](https://trello.com/b/R9eF2fVX/greentrack)
-- 📘 Swagger UI: [Documentación Swagger (local)](http://localhost:8080/swagger-ui/index.html#)
+
 
 ---
 
@@ -160,6 +160,11 @@ En el body de la petición se ha de indicar el role ROLE_ADMIN.
 | Registrar ecoAcción usuario | `POST` | `/api/profiles/{id}/new-ecoaction/{tipo}` |
 
 ---
+## Obtener Documentación del proyecto.
+Gracias a Swagger puedes obtener información del proyecto, probar y visualizar
+los enpoints de una manera rápida. **Deberás clonar el proyecto y ejecutarlo
+de manera local**. A través del enlace de abajo puedes acceder a Swagger.<br>
+- 📘 Swagger UI: [Documentación Swagger (local)](http://localhost:8080/swagger-ui/index.html#)
 
 ## 📐 Diseño del Sistema
 

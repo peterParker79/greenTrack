@@ -48,6 +48,8 @@ public class UserController {
 
     @GetMapping("/profiles/{id}")
     public ResponseEntity<User> accessById(@PathVariable int id) {
+
+        //implementación previa al CustomUserDetails
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Collection<? extends GrantedAuthority> authorities =
@@ -62,8 +64,6 @@ public class UserController {
         // Si no es admin, debe coincidir el username
         if (user.getName().equals(username)) {return ResponseEntity.ok(user);  }
         if (isAdmin) {return new ResponseEntity<>(user, HttpStatus.OK);}
-
-
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
@@ -104,6 +104,8 @@ public class UserController {
     @PostMapping ("/profiles/{id}/new-ecoaction/to-cycle")
     @ResponseStatus (HttpStatus.CREATED)
     public ToCycle addEcoActionToUser(@PathVariable int id, @RequestBody ToCycleDTO dto) {
+
+    //-------------------------------thiis code should be refactoring into method--------------------------------
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(authentication.getPrincipal() instanceof CustomUserDetails customUserDetails)) {
@@ -115,7 +117,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this resource.");
         }
 
-
+    //-----------------------------------------------------------------------------------------------------------
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -136,21 +138,47 @@ public class UserController {
 
     }
 
-   // @PreAuthorize("hasRole('ROLE_ADMIN')")
-   @PreAuthorize("hasRole('ROLE_ADMIN') or #id == authentication.principal.id")
+
+
+
     @PatchMapping("/profiles/{id}/update-name")
     public ResponseEntity<UpdateNameDTO> updateUserName(@PathVariable int id, @RequestBody UpdateNameDTO userRenamed) {
+
+        //-------------------------------thiis code should be refactoring into method--------------------------------
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication.getPrincipal() instanceof CustomUserDetails customUserDetails)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized not instance of CustomUserDetails");
+        }
+        int authenticatedUserId = customUserDetails.getId();
+
+        if (authenticatedUserId != id) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this resource.");
+        }
+
+        //-----------------------------------------------------------------------------------------------------------
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User profile not found"));
 
+
         user.setName(userRenamed.getName() );
-        userRepository.save(user); // aquí está el problema****
+        userRepository.save(user); // aquí estaba el problma el problema, userService lo volvía a cifrar...****
         ResponseEntity <UpdateNameDTO> responseEntity = new ResponseEntity<>(HttpStatus.OK);
         return responseEntity;
-
-
-
     }
+
+//   @PreAuthorize("hasRole('ROLE_ADMIN') or #id == authentication.principal.id")
+//    @PatchMapping("/profiles/{id}/update-name")
+//    public ResponseEntity<UpdateNameDTO> updateUserName(@PathVariable int id, @RequestBody UpdateNameDTO userRenamed) {
+//        User user = userRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("User profile not found"));
+//
+//        user.setName(userRenamed.getName() );
+//        userRepository.save(user); // aquí estaba el problma el problema, userService lo volvía a cifrar...****
+//        ResponseEntity <UpdateNameDTO> responseEntity = new ResponseEntity<>(HttpStatus.OK);
+//        return responseEntity;
+//    }
 
 
 

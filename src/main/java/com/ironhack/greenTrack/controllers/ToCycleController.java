@@ -15,10 +15,7 @@ public class ToCycleController {
     private ToCycleRepository toCycleRepository;
 
     @PostMapping("/eco-action/create/to-cycle")
-    /*@ResponseStatus(HttpStatus.CREATED)
-    public ToCycle createToCycle(@RequestBody ToCycle toCycle) {
-        return toCycleRepository.save(toCycle);
-    }*/
+
     public ResponseEntity<String> createToCycle() {
         ToCycle toCycle = new ToCycle();
         toCycleRepository.save(toCycle);

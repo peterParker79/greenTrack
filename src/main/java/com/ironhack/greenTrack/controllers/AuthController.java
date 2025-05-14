@@ -29,29 +29,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody UserLoginDTO userDTO) {
-        //public ResponseEntity<String> login(@RequestBody User user) {
        return jwtService.login(userDTO);
     }
-
-    // ME HE LLEVADO ESTO A JWTSERVICE
-//    public ResponseEntity<String> login(@RequestBody User user) {
-//        // si el usuario existe lo guarda, si no se lanza una excepción
-//        User userLogin = userService.getUserName(user.getName()); //recuperado de la BBDD
-//
-//        boolean validPassword = userService.verifyPassword(user.getPassword(), userLogin); //en body viene en texto plano
-//
-//        if (validPassword) {
-//           boolean validRole=false;
-//            String roleUser = userLogin.getRole().name();
-//            for (ERole role : ERole.values()) {
-//               if( role.name().toUpperCase().equals(roleUser)){validRole=true;}
-//            }
-//
-//            if (validRole){
-//            String token = jwtService.generateToken(userLogin.getName(), roleUser );
-//            return ResponseEntity.ok(token);}
-//        }
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
-//    }
-
 }
